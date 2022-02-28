@@ -1,9 +1,9 @@
 // Copyright 2020-2020 The Mandarine.TS Framework authors. All rights reserved. MIT license.
 
-import type { PoolClient } from "https://deno.land/x/postgres@v0.11.1/client.ts";
-import { Pool, QueryConfig } from "https://deno.land/x/postgres@v0.11.1/mod.ts";
-import { QueryResult } from "https://deno.land/x/postgres@v0.11.1/query/query.ts";
-import type { QueryArrayResult } from "https://deno.land/x/postgres@v0.11.1/query/query.ts";
+import type { PoolClient } from "https://deno.land/x/postgres@v0.15.0/client.ts";
+import { Pool } from "https://deno.land/x/postgres@v0.15.0/mod.ts"; 
+import { QueryResult } from "https://deno.land/x/postgres@v0.15.0/query/query.ts";
+import type { QueryArrayResult } from "https://deno.land/x/postgres@v0.15.0/query/query.ts";
 import { Log } from "../../logger/log.ts";
 import type { Mandarine } from "../../main-core/Mandarine.ns.ts";
 import { MandarineORMException } from "../core/exceptions/mandarineORMException.ts";
@@ -19,10 +19,10 @@ export interface PostgresConnectorInterface extends Mandarine.ORM.Connection.Con
     makeConnection(): Promise<PoolClient | undefined>;
     
     /** Execute a query on the external database instance. */
-    query(query: string | QueryConfig): Promise<QueryArrayResult | undefined>;
+    query(query: string ): Promise<QueryArrayResult | undefined>;
 
     /** Execute a query on the external database instance with an existing connection. */
-    queryWithConnection(connection: PoolClient, query: string | QueryConfig, releaseOnFinish: boolean): Promise<QueryArrayResult | undefined>;
+    queryWithConnection(connection: PoolClient, query: string , releaseOnFinish: boolean): Promise<QueryArrayResult | undefined>;
     
     /** Execute queries within a transaction on the database instance. */
     transaction?(queries: string[]): Promise<any[]>;
@@ -65,7 +65,7 @@ export class PostgresConnector implements PostgresConnectorInterface {
       }
     }
 
-    public async query(query: string | QueryConfig): Promise<QueryArrayResult | undefined> {
+    public async query(query: string ): Promise<QueryArrayResult | undefined> {
       try {
         const connection = await this.makeConnection();
         if(!connection) throw new Error(`Connection could not be made under query ${query}`);
@@ -78,7 +78,7 @@ export class PostgresConnector implements PostgresConnectorInterface {
       }
     }
 
-    public async queryWithConnection(connection: PoolClient, query: string | QueryConfig, bootstrap: boolean = false): Promise<QueryArrayResult | undefined> {
+    public async queryWithConnection(connection: PoolClient, query: string , bootstrap: boolean = false): Promise<QueryArrayResult | undefined> {
       try {
         // @ts-ignore
         return await connection.queryObject(query);

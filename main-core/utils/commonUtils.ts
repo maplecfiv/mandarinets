@@ -27,7 +27,7 @@ export class CommonUtils {
             decoder = new TextDecoder();
         }
 
-        const data = Leaf.readFileSync(filePath);
+        const data = Deno.readFileSync(filePath);
         return decoder.decode(data);
     }
 

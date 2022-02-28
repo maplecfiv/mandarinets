@@ -42,7 +42,7 @@ export class AuthenticationRouting {
             if(contentType === "application/json" || contentType === "application/x-www-form-urlencoded") body = await HttpUtils.parseBody(typedContext.request);
             if(!body) throw new MandarineSecurityException(MandarineSecurityException.INVALID_LOGIN_DATA);
 
-            const [ authentication ] = AuthenticationRouting.authenticator.performHTTPAuthentication({
+            const [ authentication ] = await AuthenticationRouting.authenticator.performHTTPAuthentication({
                 username: body[(httpLogingConfigurer.login.usernameParameter || "username")], 
                 password: body[(httpLogingConfigurer.login.passwordParameter || "password")],
                 requestContext: typedContext

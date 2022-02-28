@@ -34,7 +34,7 @@ export class TemplatesManager implements Mandarine.MandarineCore.ITemplatesManag
                     };
 
                     const decoder = new TextDecoder();
-                    const templateContent = Leaf.readFileSync(fullPath);
+                    const templateContent = Deno.readFileSync(fullPath);
                     context.content = decoder.decode(templateContent);
 
                     this.templates.set(fullPath, context);

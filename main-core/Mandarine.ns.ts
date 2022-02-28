@@ -923,10 +923,10 @@ export namespace Mandarine {
      * Mandarine File System
      */
 
-    export const readFile = Leaf.readFile;
-    export const readFileSync = Leaf.readFileSync;
-    export const readTextFile = Leaf.readTextFile;
-    export const readTextFileSync = Leaf.readTextFileSync;
+    export const readFile = Deno.readFile;
+    export const readFileSync = Deno.readFileSync;
+    export const readTextFile = Deno.readTextFile;
+    export const readTextFileSync = Deno.readTextFileSync;
 
      /**
       * End File System

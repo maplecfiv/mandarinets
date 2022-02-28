@@ -68,7 +68,7 @@ export class MandarineResourceResolver implements Mandarine.MandarineMVC.HTTPRes
                 httpContext.response.type = `.${resourceExt}`;
             }
 
-            return Leaf.readFile(resourcePath);
+            return Deno.readFile(resourcePath);
         }
 
     }

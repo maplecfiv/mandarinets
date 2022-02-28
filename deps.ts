@@ -2,4 +2,4 @@
 
 // @ts-ignore
 export { Application, Cookies, Request, Router, Context, Middleware, isHttpError, Status, FormDataReader, send, Response, ListenOptionsTls, ListenOptionsBase } from "https://deno.land/x/oak@v10.4.0/mod.ts";
-export { Leaf } from "https://deno.land/x/leaf@v1.0.3/mod.ts";
+export { Leaf } from "https://deno.land/x/leaf@v1.0.4/mod.ts";

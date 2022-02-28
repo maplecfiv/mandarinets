@@ -7,7 +7,7 @@ import { Mandarine } from "../../../main-core/Mandarine.ns.ts";
 export const handleBuiltinAuth = () => {
     return async (context: any, next: Function) => {
         const typedContext: Mandarine.Types.RequestContext = context;
-        const authCookieId = AuthUtils.findAuthCookie(typedContext);
+        const authCookieId = await AuthUtils.findAuthCookie(typedContext);
         if(!authCookieId) {
             context.request.authentication = undefined;
             await next();

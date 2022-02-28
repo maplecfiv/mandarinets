@@ -19,8 +19,8 @@ export class Authenticator implements Mandarine.Security.Auth.Authenticator {
         return AuthUtils.verifyAuthenticationSatisfaction(withSessionContainer);
     }
 
-    private isHTTPAuthenticated(requestContext: Mandarine.Types.RequestContext): [boolean, string | undefined] {
-        const authCookie = AuthUtils.findAuthCookie(requestContext);
+    private async isHTTPAuthenticated(requestContext: Mandarine.Types.RequestContext): Promise<[boolean, string | undefined]> {
+        const authCookie = await AuthUtils.findAuthCookie(requestContext);
         const sessionContainer = Mandarine.Global.getSessionContainer();
         if(sessionContainer.store && sessionContainer.store.exists) {
             if(authCookie != undefined && sessionContainer.store.exists(authCookie)) {
@@ -35,8 +35,8 @@ export class Authenticator implements Mandarine.Security.Auth.Authenticator {
      * 
      * @param requestContext Refers to the context of the current request.
      */
-    public getAuthenticationId(requestContext: Mandarine.Types.RequestContext): string | undefined {
-        return AuthUtils.findAuthCookie(requestContext);
+    public async getAuthenticationId(requestContext: Mandarine.Types.RequestContext): Promise< string | undefined >{
+        return await AuthUtils.findAuthCookie(requestContext);
     }
 
     /**
@@ -114,7 +114,7 @@ export class Authenticator implements Mandarine.Security.Auth.Authenticator {
      * @param data Contains the information to execute the authentication such as user & password. 
      * Optionally, you can pass executers to the executer object. Where `authExecuter` is a function to be called at the end of the authentication if successful & `httpExecuter` a function to be called at the end of the HTTP authentication process.
      */
-    public performHTTPAuthentication(data: Mandarine.Security.Auth.PerformHTTPAuthenticationOptions): [Mandarine.Security.Auth.AuthenticationResult, Mandarine.Security.Auth.UserDetails | undefined] {
+    public async performHTTPAuthentication(data: Mandarine.Security.Auth.PerformHTTPAuthenticationOptions): Promise<[Mandarine.Security.Auth.AuthenticationResult, Mandarine.Security.Auth.UserDetails | undefined] >{
         const { requestContext, username, password } = data;
 
         const authenticationData = {
@@ -123,7 +123,7 @@ export class Authenticator implements Mandarine.Security.Auth.Authenticator {
             executer: data.executers?.authExecuter
         };
 
-        const [authenticate, userDetails] = this.performAuthentication(authenticationData, requestContext);
+        const [authenticate, userDetails] =await this.performAuthentication(authenticationData, requestContext);
 
         const authenticationObject = Object.assign({}, authenticate);
 
@@ -134,7 +134,7 @@ export class Authenticator implements Mandarine.Security.Auth.Authenticator {
 
             if(!this.verifyAuthenticationSatisfaction()) throw new MandarineSecurityException(MandarineSecurityException.UNSATISFIED_AUTHENTICATOR);
 
-            const [isCurrentlyLoggedIn, sessionID] = this.isHTTPAuthenticated(requestContext);
+            const [isCurrentlyLoggedIn, sessionID] = await this.isHTTPAuthenticated(requestContext);
             if(isCurrentlyLoggedIn) {
                 authenticationObject.status = "ALREADY-LOGGED-IN";
                 authenticationObject.authSesId = sessionID;

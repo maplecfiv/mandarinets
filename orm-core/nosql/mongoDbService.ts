@@ -1,8 +1,8 @@
 // Copyright 2020-2020 The Mandarine.TS Framework authors. All rights reserved. MIT license.
 
-import { MongoClient, Bson, ListDatabaseInfo } from "https://raw.githubusercontent.com/mandarineorg/mandarinets-modules/master/mongo/0.21.2/mod.ts";
-import { Database } from "https://raw.githubusercontent.com/mandarineorg/mandarinets-modules/master/mongo/0.21.2/src/database.ts";
-import { Collection } from "https://raw.githubusercontent.com/mandarineorg/mandarinets-modules/master/mongo/0.21.2/src/collection/collection.ts";
+import { MongoClient, Bson, ListDatabaseInfo } from "https://deno.land/x/mongo@v0.29.2/mod.ts";
+import { Database } from "https://deno.land/x/mongo@v0.29.2/src/database.ts";
+import { Collection } from "https://deno.land/x/mongo@v0.29.2/src/collection/collection.ts";
 
 export class MongoDBService {
 
