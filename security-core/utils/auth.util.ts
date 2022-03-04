@@ -5,6 +5,10 @@ import { MandarineConstants } from "../../main-core/mandarineConstants.ts";
 
 export class AuthUtils {
     public static async findAuthCookie(context: Mandarine.Types.RequestContext): Promise<string | undefined> {
+        /** https://deno.land/x/oak@v9.0.0/CHANGELOG.md
+         *  https://github.com/oakserver/oak/commit/14c6b47
+         *  oak use web crypto for sign coookies since 9.0.0
+         */
         return await context.cookies.get(MandarineConstants.SECURITY_AUTH_COOKIE_NAME, { signed: true });
     }
 
